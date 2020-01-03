@@ -1,0 +1,50 @@
+### Docker-compose file to be used with the Angular/node container
+###
+### Ref: https://www.simb.co/blog/using-angular-cli-with-docker-and-docker-compose/
+###
+### Intended to host the app in ./app
+###
+### Build with:
+### docker-compose build
+###
+### Instantiate a new app with:
+### mkdir ./app
+### docker-compose run --rm node git config --global user.email "user@example.com"
+### docker-compose run --rm node git config --global user.name "Example user"
+### docker-compose run --rm node ng new --directory=./ --skip-install {{ app_name }}
+
+### ***
+### docker-compose run --rm node yarn
+###
+### Update components
+###
+### docker-compose run --rm node npm install --save core-js@^3
+### docker-compose run --rm node npm update
+### docker-compose run --rm node npm outdated
+
+### Run the app:
+### *** EDIT .app/package.json, set "start": "ng serve --host 0.0.0.0",
+####         
+### docker-compose up
+
+### Check with a browser to http://localhost:4200/
+### NOTE! If you can't connect, stop the container using docker-compose down, then ensure that app/package.json
+### has the correct "start" entry in it
+
+version: '2'
+
+services:
+  node:
+    image: local/node
+    build: .
+
+    ports:
+      - "4200:4200"
+
+    volumes:
+      - ./app:/usr/src/app
+    
+    command: yarn run start
+
+
+
